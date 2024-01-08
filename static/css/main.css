@@ -1,0 +1,9 @@
+a {
+     text-decoration: none;
+}
+
+.full-width-banner {
+     width: 100%;
+     height: auto;
+     display: block;
+}

@@ -1,0 +1,52 @@
+{% load cart_tag %}
+<nav class="navbar navbar-expand-lg "  style="background-color: #B6C4B6;">
+     <div class="container-fluid">
+          <a class="navbar-brand" href="{% url 'Shop:home' %}">QuantumGoods</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02"
+               aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+               <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse ml-auto" id="navbarTogglerDemo02">
+               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                         <a href="{% url 'Shop:all_products' %}" class="nav-link">
+                              <span>Store</span>
+                         </a>
+                    </li>
+                    {% if request.user.is_authenticated %}
+                    <li class="nav-item">
+                         <a href="{% url 'Order:cart' %}" class="nav-link">
+                              <i class="fa fa-shopping-cart"></i> Cart
+                              <span class="badge badge-light">{{cart_count}}</span>
+                         </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                              aria-expanded="false">
+                              
+                              <img src="{{request.user.profile.profile_picture.url}}" style ="height: 35px;" alt="">
+                              {% comment %} <i class="fas fa-user-tie"></i> {% endcomment %}
+                         </a>
+                         <ul class="dropdown-menu">
+                              <li>
+                                   <a class="dropdown-item" href="{% url 'Accounts:profile' %}">Profile</a>
+                              </li>
+                              <li>
+                                   <a class="dropdown-item" href="{% url 'Payment:orders' %}">Orders</a>
+                              </li>
+                              <li>
+                                   <a class="dropdown-item" href="{% url 'Accounts:logout' %}">Logout</a>
+                              </li>
+                              
+                         </ul>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                         <a href="{% url 'Accounts:login' %}" class="btn btn-primary">Login</a>
+                    </li>
+                    {% endif %}
+               </ul>
+          </div>
+     </div>
+</nav>
+

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block body_block %}
+<img class="full-width-banner" src="https://raw.githubusercontent.com/MdAshiqurRahmanZayed/DjangoEcommerce/main/static/images/banners/cover.jpg" alt="" srcset="">
+
+<div class="container my-5">
+  <h2 class="my-5">Featured Products</h2>
+  <div class="row">
+    {% for product in products %}
+    <div class="col">
+      <div class="card" style="width: 19rem;">
+        <img src="{{product.images.url}}" style="width: 18rem;height: 15rem;" class="card-img-top" alt="{{product.description}}">
+        <div class="card-body">
+          <h5 class="card-title">
+          <a href="{% url 'Shop:product_detail' slug=product.slug %}">
+            {{product.product_name}}
+          </a>
+          </h5>
+          <span >Old Price: <strike>{{product.old_price}}</strike></span>
+          <p >Price:{{product.price}}</p>
+        </div>
+      </div>
+
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock %}
