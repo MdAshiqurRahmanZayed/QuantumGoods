@@ -4,13 +4,12 @@ from django.conf import settings
 # Model
 from Shop.models import Product
 # Create your models here.
-
 class Cart(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="cart")
     item = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="cart_product_name")
     quantity = models.IntegerField(default=1)
     purchased = models.BooleanField(default=False)
-    
+    coupon_applied = models.BooleanField(default=False)  
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -18,9 +17,18 @@ class Cart(models.Model):
         return f'{self.quantity} X {self.item}'
 
     def get_total(self):
-        total = self.item.price * self.quantity
-        float_total = format(total, '0.2f')
-        return float_total
+        if self.coupon_applied  == False:
+            total = self.item.price * self.quantity
+            float_total = format(total, '0.2f')
+            return float_total
+        else:
+            # print(self.item.coupon_code.discount_percentage)
+            # discount = (100 - int(self.item.coupon_code.discount_percentage)) / 100  
+            # print(discount)
+            total = (100- self.item.coupon_code.discount_percentage)/100 * self.item.price * self.quantity   
+            # print((100- self.item.coupon_code.discount_percentage)/100 * self.item.price * self.quantity )
+            float_total = format(total, '0.2f')
+            return float_total
 
 
 class Order(models.Model):

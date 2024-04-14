@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block body_block %}
+
+<div class="container mt-4">
+    <h1>My Product List</h1>
+    <ul>
+        {% for product in products %}
+            <li>
+                {{ product.product_name }} - 
+                <a href="{% url 'Shop:update_product' product.pk %}">Edit</a> | 
+                <a href="{% url 'Shop:delete_product' product.pk %}">Delete</a> | 
+                <a href="{% url 'Shop:apply_products_coupon' product.pk %}">Apply Coupon</a>
+                {% if product.coupon_code %}
+                    - <b>Coupon Applied:</b> {{ product.coupon_code }}
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}

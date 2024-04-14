@@ -79,7 +79,7 @@ class Profile(models.Model):
     phone_number  = models.CharField(max_length=50,null=True,blank=True)
     address_line_1 = models.CharField( max_length=100,null=True,blank=True)
     address_line_2 = models.CharField( max_length=100,null=True,blank=True)
-    profile_picture = models.ImageField( upload_to='images/profile',default='default.user.png',null=True,blank=True)
+    profile_picture = models.ImageField( upload_to='images/profile',default='default/user.png',null=True,blank=True)
     city = models.CharField(max_length=20,null=True,blank=True)
     zipcode = models.CharField( max_length=20,null=True,blank=True)
     country = models.CharField( max_length=20,null=True,blank=True)

@@ -4,7 +4,7 @@ from django.utils.text import slugify
 from Accounts.models import *
 from django.urls import reverse
 from django.db.models import Avg, Count
-
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 def unique_slugify(instance, slug):
     model = instance.__class__
@@ -36,25 +36,27 @@ class Category(models.Model):
         super().save(*args, **kwargs)     
 
 class Coupon(models.Model):
-    code = models.CharField(max_length=20, unique=True)
-    discount_percentage = models.IntegerField()
-    max_usage = models.IntegerField()
-    current_usage = models.IntegerField(default=0)
-
-    def is_valid(self):
-        return self.current_usage < self.max_usage
+    cupon_user = models.ForeignKey(Account, on_delete=models.CASCADE)
+    code = models.CharField(max_length=50, unique=True)
+    discount_percentage = models.IntegerField(
+        default=0,
+        validators=[MaxValueValidator(100), MinValueValidator(1)]
+     )
 
     def apply_discount(self, original_price):
-        return original_price - (original_price * self.discount_percentage / 100)
+        return original_price * ((100-self.discount_percentage)/100)
+    def __str__(self):
+        return f'Code:({self.code}) Discount:({self.discount_percentage}%)'
 
 class Product(models.Model):
+     product_user = models.ForeignKey(Account, on_delete=models.CASCADE)  
      product_name = models.CharField(max_length = 200,unique = True)
-     slug         = models.SlugField(max_length = 200,unique = True)
+     slug         = models.SlugField(max_length = 200,unique = True,blank=True, null=True)
      description  = models.TextField(max_length = 500,blank=True)
      price        = models.IntegerField()
      images       = models.ImageField( upload_to='images/products')
      stock        = models.IntegerField()
-     is_available = models.BooleanField()
+     is_available = models.BooleanField(default=True)
      category     = models.ForeignKey(Category, on_delete=models.CASCADE)
      created_at   = models.DateTimeField( auto_now_add=True)
      modified_at  = models.DateTimeField( auto_now=True)

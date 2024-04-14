@@ -12,6 +12,7 @@
                     <th scope="col">Quantity</th>
                     <th scope="col" align="right">Price</th>
                     <th scop="col">Remove</th>
+                    <th scop="col">Apply</th>
                </tr>
           </thead>
           <tbody>
@@ -30,6 +31,14 @@
                     </td>
                     <td align="right">&#2547; {{cart.get_total}}</td>
                     <td><a href="{% url 'Order:remove_from_cart' pk=cart.item.pk %}" class="btn btn-danger btn-sm">Remove From Cart</a></td>
+                    <td>
+                         <form  method="POST">
+                              {% csrf_token %}
+                              <input class="form-control" name="coupon_code" type="text" placeholder="Coupon code" >
+                              <input name="product" type="hidden" value="{{cart.item.id}}">
+                              <input class="btn btn-primary my-1" type="submit" value="Apply">
+                         </form>
+                    </td>
                </tr>
                {% endfor %}
                <tr>

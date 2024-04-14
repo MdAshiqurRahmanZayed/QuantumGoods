@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block body_block %}
+
+<div class="container mt-4">
+    <h1>Confirm Deletion</h1>
+    <p>Are you sure you want to delete "{{ product.product_name }}"?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button class="btn btn-danger" type="submit">Confirm</button>
+    </form>
+</div>
+
+{% endblock %}

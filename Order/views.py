@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 
 # Model
 from Order.models import Cart, Order
-from Shop.models import Product
+from Shop.models import Product,Coupon
 # Messages
 from django.contrib import messages
 
@@ -50,6 +50,31 @@ def cart_view(request):
     orders = Order.objects.filter(user =request.user,ordered= False)
     if carts.exists() and orders.exists():
         order = orders[0]
+        if request.method =='POST':
+            coupon_code = request.POST.get('coupon_code')
+            pk = request.POST.get('product')
+            product = Product.objects.get(id = pk)
+            # print(coupon_code)
+            try:
+                coupon = Coupon.objects.get(code=coupon_code)
+                cart = Cart.objects.filter(item = product ,item__coupon_code=coupon)
+                # print(coupon)
+                # print(cart[0].coupon_applied)
+                if cart:
+                    if cart[0].coupon_applied == False:
+                        for i in range(len(cart)):
+                            cart[i].coupon_applied = True
+                            cart[i].save()
+                # print(order.item)
+                # if coupon.cupon_user == request.user:
+                #     # Apply discount to the order total
+                #     order.total -= coupon.apply_discount(order.total)
+                #     order.save()
+                #     messages.success(request, "Coupon applied successfully!")
+                # else:
+                #     messages.error(request, "You are not authorized to use this coupon.")
+            except Coupon.DoesNotExist:
+                messages.error(request, "Invalid coupon code!")
         context = {
             'carts':carts,
             'order':order,
