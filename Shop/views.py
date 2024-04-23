@@ -184,3 +184,20 @@ def apply_products_coupon(request, pk):
 
     return render(request, 'coupon/apply_products_coupon.html', {'coupons': coupons, 'product': product})
 
+def delete_products_coupon(request,pk):
+    try:
+        
+        product = get_object_or_404(Product, id=pk)
+        if product:
+            product.coupon_code = None
+            product.save()
+            messages.info(request, f"Coupon deleted for the products")
+            return redirect('Shop:product_list')
+            
+    except:
+            messages.info(request, f"You are not allowed")
+            return redirect('Shop:product_list')
+            
+            
+        
+

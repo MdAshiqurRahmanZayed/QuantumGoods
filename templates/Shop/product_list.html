@@ -12,7 +12,11 @@
                 <a href="{% url 'Shop:delete_product' product.pk %}">Delete</a> | 
                 <a href="{% url 'Shop:apply_products_coupon' product.pk %}">Apply Coupon</a>
                 {% if product.coupon_code %}
-                    - <b>Coupon Applied:</b> {{ product.coupon_code }}
+                    - <b>Coupon Applied:</b> {{ product.coupon_code }} - 
+                    
+                <a href="{% url 'Shop:delete_products_coupon' product.pk %}">
+                    <div class="btn btn-sm btn-danger">Delete coupon</div>
+                </a>
                 {% endif %}
             </li>
         {% endfor %}

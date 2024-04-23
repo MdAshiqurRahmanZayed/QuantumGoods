@@ -24,4 +24,5 @@ urlpatterns = [
     path('coupon-delete/<int:pk>/', delete_coupon, name='delete_coupon'),
     
     path('apply-coupon-products/<int:pk>/', apply_products_coupon, name='apply_products_coupon'),
+    path('delete-applied-products/<int:pk>/', delete_products_coupon, name='delete_products_coupon'),
 ]
