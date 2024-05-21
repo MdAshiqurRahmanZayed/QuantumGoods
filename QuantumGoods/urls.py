@@ -11,7 +11,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("account/", include('Accounts.urls')),
     path("", include('Shop.urls')),
-    path("shop/", include('Order.urls')),
+    path("order/", include('Order.urls')),
     path("payment/", include('Payment.urls')),
 ]
 urlpatterns += staticfiles_urlpatterns()

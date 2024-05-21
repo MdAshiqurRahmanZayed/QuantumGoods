@@ -41,9 +41,10 @@ class MyAccountManager(BaseUserManager):
           user.save(using=self._db)
           return user
           
-
-
-
+USER_TYPES = (
+     ('buyer', 'Buyer'),
+     ('seller', 'Seller'),
+)
 class Account(AbstractBaseUser,PermissionsMixin):
     username      = models.CharField(max_length=50, unique=True,null=False,blank=True)
     email         = models.EmailField(max_length=100, unique=True)
@@ -55,6 +56,7 @@ class Account(AbstractBaseUser,PermissionsMixin):
     is_staff      = models.BooleanField(default=False)
     is_active     = models.BooleanField(default=False)
     is_superadmin = models.BooleanField(default=False)
+    user_type = models.CharField(verbose_name='User Type', max_length=20, choices=USER_TYPES, default='buyer')
     
     USERNAME_FIELD= 'email'
     REQUIRED_FIELDS= ['username',]

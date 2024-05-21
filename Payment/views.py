@@ -143,10 +143,15 @@ def purchase(request, val_id, tran_id,payment_data):
 
 @login_required
 def order_view(request):
-    try:
-        orders = Order.objects.filter(user=request.user, ordered=True)
-        context = {"orders": orders}
-    except:
-        messages.warning(request, "You do no have an active order")
-        return redirect("Shop:home")
-    return render(request, "Payment/order.html", context)
+    if request.user.user_type == "buyer":
+        try:
+            orders = Order.objects.filter(user=request.user, ordered=True)
+            context = {"orders": orders}
+        except:
+            messages.warning(request, "You do no have an active order")
+            return redirect("Shop:home")
+        return render(request, "Payment/order.html", context)
+        
+    else:
+        messages.info(request, f"You are not allowed")
+        return redirect('Shop:home')

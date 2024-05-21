@@ -25,4 +25,11 @@ urlpatterns = [
     
     path('apply-coupon-products/<int:pk>/', apply_products_coupon, name='apply_products_coupon'),
     path('delete-applied-products/<int:pk>/', delete_products_coupon, name='delete_products_coupon'),
+    
+    #Category
+    path('category-create/', create_category, name='create_category'),
+    path('category-list/', all_category, name='all_category'),
+    path('category-update/<int:pk>/', update_category, name='update_category'),
+    path('category-delete/<int:pk>/', delete_category, name='delete_category'),
+    
 ]

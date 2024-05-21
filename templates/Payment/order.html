@@ -21,9 +21,11 @@
                 <th scope="row">{{ forloop.counter }}</th>
                 <td><a href="#">{{ order.orderId }}</a></td>
                 <td>
-                  {% for item in order.orderitems.all %} {{item}} <br> {% endfor %}
+                  {% for item in order.orderitems.all %} 
+                  {{item}} <br> 
+                  {% endfor %}
                 </td>
-                <td><span class="badge bg-primary">Processing Your ORder</span></td>
+                <td><span class="badge bg-primary">{{order.order_status}}</span></td>
               </tr>
               {% endfor %}
             </tbody>

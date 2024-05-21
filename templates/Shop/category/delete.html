@@ -2,12 +2,11 @@
 {% block body_block %}
 
 <div class="container mt-4">
+     <h3>Do you want to delete <div class="text-danger">{{category}}</div></h3>
      <form method="POST" enctype="multipart/form-data">
           {% csrf_token %}
-          {{form}}
-          <input class="btn btn-primary my-3" type="submit" value="Create product">
+          <input class="btn btn-danger my-3" type="submit" value="Delete Category">
      </form>
-     <p><a href="{% url 'Shop:create_category' %}">Create Category</a></p>
 </div>
 
 {% endblock %}

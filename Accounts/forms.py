@@ -14,4 +14,4 @@ class ProfileForm(ModelForm):
 class SignUpForm(UserCreationForm):
     class Meta:
         model = Account
-        fields = ('email', 'password1', 'password2',)
+        fields = ('email', 'password1', 'password2','user_type')

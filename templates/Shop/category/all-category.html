@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block body_block %}
+
+<div class="container mt-4">
+     <h2>All category</h2>
+     {% if not category  %}
+          <h5>There are no category</h5>
+     {% else %}
+     
+     <ul>
+     {% for cat in category %}
+          <li>
+               {{cat.category_name}} - <a href="{% url 'Shop:update_category' cat.id %}"><div class="btn btn-sm btn-primary">Edit</div></a> <a href="{% url 'Shop:delete_category' cat.id %}"><div class="btn btn-sm btn-danger">Delete</div></a> 
+          </li>
+     {% endfor %}
+     </ul>     
+          
+     {% endif %}
+          
+</div>
+
+{% endblock %}

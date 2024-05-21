@@ -30,7 +30,13 @@ class Cart(models.Model):
             float_total = format(total, '0.2f')
             return float_total
 
-
+ORDER_STATUS_CHOICES = {
+    'PENDING': 'Pending',
+    'PROCESSING': 'Processing',
+    'SHIPPED': 'Shipped',
+    'DELIVERED': 'Delivered',
+    'CANCELLED': 'Cancelled'
+}
 class Order(models.Model):
     orderitems = models.ManyToManyField(Cart)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -39,6 +45,7 @@ class Order(models.Model):
     paymentId = models.CharField(max_length=264, blank=True, null=True)
     orderId = models.CharField(max_length=200, blank=True, null=True)
     full_payment_data  = models.TextField( blank=True, null=True)
+    order_status = models.CharField(max_length=20, choices=ORDER_STATUS_CHOICES, default='PENDING')
 
     def get_totals(self):
         total = 0

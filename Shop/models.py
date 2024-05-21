@@ -15,6 +15,7 @@ def unique_slugify(instance, slug):
 
 
 class Category(models.Model):
+     user = models.ForeignKey(Account, on_delete=models.CASCADE)
      category_name = models.CharField(max_length=50,unique=True)
      slug = models.SlugField(max_length=100,unique=True)
      description =models.TextField(max_length=300,blank=True)
@@ -32,7 +33,7 @@ class Category(models.Model):
       
      def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = unique_slugify(self, slugify(self.title))
+            self.slug = unique_slugify(self, slugify(self.category_name))
         super().save(*args, **kwargs)     
 
 class Coupon(models.Model):

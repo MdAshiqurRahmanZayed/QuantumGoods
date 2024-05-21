@@ -10,5 +10,9 @@ urlpatterns = [
     
     path('increase-item-quantity/<pk>/', increase_cart, name="increase_quantity"),
     path('decrease-item-quantity/<pk>/', decrease_cart, name="decrease_quantity"),
+    
+    path('see-all-purchesed/', see_all_purchesed_orders, name="see_all_purchesed_orders"),
+    path('update-status/<pk>/', update_status, name="update_status"),
+    
 
 ]

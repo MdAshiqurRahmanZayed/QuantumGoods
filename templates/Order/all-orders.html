@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block body_block %}
+  <div class="container my-5">
+    <div class="my-5">
+      <h2>Your Cart</h2>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col" width="15%">#</th>
+            <th scope="col">Order Items</th>
+            <th scope="col">Created</th>
+            <th scope="col" align="right">Payment Id</th>
+            <th scope="col">Order Id</th>
+            <th scope="col" width="20%">Order Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for order in all_orders %}
+            <tr>
+              <th scope="row">{{ forloop.counter }}</th>
+              <td>
+                {% for item in order.orderitems.all %}
+                  {{ item }}<br />
+                {% endfor %}
+              </td>
+              <td>{{ order.created }}</td>
+              <td align="right">{{ order.paymentId }}</td>
+              <td>{{ order.orderId }}</td>
+              <td class="w-75">
+                <p class="text-info">{{ order.order_status }}</p>
+                <form action="{% url 'Order:update_status' order.id %}" method="post">
+                  {% csrf_token %}
+                  {{ form.order_status }}
+                  <button type="submit" class="btn btn-primary mt-2">Change Status</button>
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock %}

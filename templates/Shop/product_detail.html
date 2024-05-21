@@ -29,7 +29,12 @@
 
                {% if product.stock >= 1 %}
                {% if not cart %}
+               {% if request.user.user_type == "buyer" %}
                <a href="{% url 'Order:add' pk=product.id %}" class="btn btn-primary">Add to Cart</a>
+               {% else %}
+               <p>Login as buyer</p>
+               {% endif %}
+                    
                {% else %}
                <p>Already added to <b>Cart</b></p>
                {% endif %}
